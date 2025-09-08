@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>TENS AI Commands</title>
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        // Initialize Office.js
+        Office.onReady((info) => {
+            if (info.host === Office.HostType.Excel) {
+                // Excel-specific initialization
+                console.log('Excel add-in loaded');
+            } else if (info.host === Office.HostType.Word) {
+                // Word-specific initialization
+                console.log('Word add-in loaded');
+            } else if (info.host === Office.HostType.PowerPoint) {
+                // PowerPoint-specific initialization
+                console.log('PowerPoint add-in loaded');
+            } else if (info.host === Office.HostType.Outlook) {
+                // Outlook-specific initialization
+                console.log('Outlook add-in loaded');
+            }
+        });
+
+        // Function to handle button clicks from the ribbon
+        function executeFunction(event) {
+            // This function is called when buttons in the ribbon are clicked
+            console.log('Button clicked:', event);
+            
+            // You can add specific functionality here based on the button clicked
+            // For now, we'll just log the event
+            event.completed();
+        }
+
+        // Make the function available globally
+        window.executeFunction = executeFunction;
+    </script>
+</body>
+</html>

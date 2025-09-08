@@ -1,11 +1,11 @@
-# AI ML Gyan Office Add-in
+# TENS AI Office Add-in
 
-A comprehensive Microsoft Office add-in that integrates AI ML Gyan's powerful AI capabilities directly into Word, Excel, PowerPoint, and Outlook.
+A comprehensive Microsoft Office add-in that integrates TENS AI's powerful AI capabilities directly into Word, Excel, PowerPoint, and Outlook.
 
 ## Features
 
 - **Multi-Office Support**: Works seamlessly across Word, Excel, PowerPoint, and Outlook
-- **AI-Powered Content**: Generate, analyze, and improve content using AI ML Gyan's API
+- **AI-Powered Content**: Generate, analyze, and improve content using TENS AI's API
 - **Smart Text Processing**: Analyze sentiment, extract keywords, and summarize content
 - **Content Generation**: Create professional content based on prompts and context
 - **Writing Enhancement**: Improve grammar, clarity, and overall text quality
@@ -16,7 +16,7 @@ A comprehensive Microsoft Office add-in that integrates AI ML Gyan's powerful AI
 - Node.js (version 16 or higher)
 - npm (comes with Node.js)
 - Microsoft Office 365 or Office 2019/2021
-- AI ML Gyan API key (get from https://www.dev2.tens-ai.com/api-keys)
+- TENS AI API key (get from https://www.dev2.tens-ai.com/api-keys)
 
 ## Installation & Setup
 
@@ -37,7 +37,7 @@ npm install
 cp env.example .env
 
 # Edit the .env file with your configuration
-# At minimum, you need to set your AI ML Gyan API key
+# At minimum, you need to set your TENS AI API key
 ```
 
 ### Step 3: Start the Development Server
@@ -67,12 +67,12 @@ curl -k https://localhost:3000/health
 
 #### 1.2 Test Static Files
 - Open browser and navigate to: `https://localhost:3000/taskpane.html`
-- You should see the AI ML Gyan Assistant interface
+- You should see the TENS AI Assistant interface
 - Check that all CSS and JavaScript files load without errors
 
 #### 1.3 Test API Endpoints
 ```bash
-# Test AI ML Gyan health check (without API key)
+# Test TENS AI health check (without API key)
 curl -k https://localhost:3000/api/aimlgyan/health
 
 # Test with API key (replace YOUR_API_KEY)
@@ -102,7 +102,7 @@ curl -k -H "x-api-key: YOUR_API_KEY" https://localhost:3000/api/aimlgyan/health
 4. Click Upload
 
 #### 2.2 Test Add-in Loading
-1. After installation, look for "AI ML Gyan" group in the Home ribbon
+1. After installation, look for "TENS AI" group in the Home ribbon
 2. Click the "AI Assistant" button
 3. The task pane should open on the right side
 4. Verify the interface loads correctly
@@ -110,7 +110,7 @@ curl -k -H "x-api-key: YOUR_API_KEY" https://localhost:3000/api/aimlgyan/health
 ### Phase 3: Authentication Testing
 
 #### 3.1 Test API Key Authentication
-1. In the task pane, enter your AI ML Gyan API key
+1. In the task pane, enter your TENS AI API key
 2. Click "Connect"
 3. Verify success message appears
 4. Check that the main interface becomes visible
@@ -323,7 +323,7 @@ docker-compose up -d
 For issues and support:
 - Check the troubleshooting section above
 - Review server logs for error details
-- Contact AI ML Gyan support at https://www.dev2.tens-ai.com/support
+- Contact TENS AI support at https://www.dev2.tens-ai.com/support
 
 ## License
 

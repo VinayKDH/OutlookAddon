@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TENS AI Assistant</title>
+
+    <!-- Office JavaScript API -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div id="content-header">
+        <div class="ms-welcome">
+            <div class="ms-welcome__header ms-bgColor-neutralLighter ms-u-fadeIn500">
+                <img width="90" height="90" src="assets/logo.png" alt="TENS AI" title="TENS AI" />
+                <h1 class="ms-fontSize-su ms-fontWeight-light ms-fontColor-neutralPrimary">TENS AI Assistant</h1>
+                <h2 class="ms-fontSize-l ms-fontWeight-light ms-fontColor-neutralSecondary">Your AI-powered Office companion</h2>
+            </div>
+        </div>
+    </div>
+
+    <div id="content-main">
+        <!-- Authentication Section -->
+        <div id="auth-section" class="section">
+            <div class="ms-welcome__action ms-u-slideUpIn20">
+                <div class="ms-TextField">
+                    <label class="ms-Label">API Key</label>
+                    <input class="ms-TextField-field" type="password" id="api-key" placeholder="Enter your TENS AI API key" />
+                </div>
+                <button class="ms-Button ms-Button--primary" id="authenticate-btn">
+                    <span class="ms-Button-label">Connect</span>
+                </button>
+                <div class="help-text">
+                    <a href="https://www.dev2.tens-ai.com/api-keys" target="_blank">Get your API key</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Interface -->
+        <div id="main-interface" class="section" style="display: none;">
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h3 class="section-title">Quick Actions</h3>
+                <div class="action-buttons">
+                    <button class="action-btn" id="analyze-text-btn">
+                        <i class="fas fa-search"></i>
+                        <span>Analyze Text</span>
+                    </button>
+                    <button class="action-btn" id="generate-content-btn">
+                        <i class="fas fa-magic"></i>
+                        <span>Generate Content</span>
+                    </button>
+                    <button class="action-btn" id="improve-writing-btn">
+                        <i class="fas fa-edit"></i>
+                        <span>Improve Writing</span>
+                    </button>
+                    <button class="action-btn" id="summarize-btn">
+                        <i class="fas fa-compress"></i>
+                        <span>Summarize</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content Input -->
+            <div class="content-section">
+                <h3 class="section-title">Content</h3>
+                <div class="ms-TextField">
+                    <textarea class="ms-TextField-field content-textarea" id="content-input" 
+                              placeholder="Enter text to analyze, improve, or use as context for generation..."></textarea>
+                </div>
+                <div class="content-actions">
+                    <button class="ms-Button ms-Button--primary" id="get-selection-btn">
+                        <span class="ms-Button-label">Get Selected Text</span>
+                    </button>
+                    <button class="ms-Button" id="clear-content-btn">
+                        <span class="ms-Button-label">Clear</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- AI Prompt -->
+            <div class="prompt-section">
+                <h3 class="section-title">AI Prompt</h3>
+                <div class="ms-TextField">
+                    <textarea class="ms-TextField-field prompt-textarea" id="ai-prompt" 
+                              placeholder="Describe what you want the AI to do..."></textarea>
+                </div>
+                <div class="prompt-suggestions">
+                    <button class="suggestion-btn" data-prompt="Improve the grammar and clarity of this text">Improve Grammar</button>
+                    <button class="suggestion-btn" data-prompt="Make this text more professional and formal">Make Professional</button>
+                    <button class="suggestion-btn" data-prompt="Summarize the key points in this text">Summarize</button>
+                    <button class="suggestion-btn" data-prompt="Expand on this text with more details">Expand</button>
+                </div>
+            </div>
+
+            <!-- Process Button -->
+            <div class="process-section">
+                <button class="ms-Button ms-Button--primary ms-Button--hero" id="process-btn" disabled>
+                    <span class="ms-Button-label">Process with AI</span>
+                </button>
+            </div>
+
+            <!-- Results -->
+            <div id="results-section" class="section" style="display: none;">
+                <h3 class="section-title">Results</h3>
+                <div class="results-container">
+                    <div class="result-tabs">
+                        <button class="tab-btn active" data-tab="result">Result</button>
+                        <button class="tab-btn" data-tab="metadata">Metadata</button>
+                    </div>
+                    <div class="tab-content">
+                        <div id="result-tab" class="tab-pane active">
+                            <div class="result-content" id="result-content"></div>
+                            <div class="result-actions">
+                                <button class="ms-Button ms-Button--primary" id="insert-result-btn">
+                                    <span class="ms-Button-label">Insert into Document</span>
+                                </button>
+                                <button class="ms-Button" id="copy-result-btn">
+                                    <span class="ms-Button-label">Copy to Clipboard</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="metadata-tab" class="tab-pane">
+                            <div class="metadata-content" id="metadata-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div class="settings-section">
+                <h3 class="section-title">Settings</h3>
+                <div class="setting-item">
+                    <label class="ms-Label">API Key</label>
+                    <div class="api-key-display">
+                        <span id="api-key-display">••••••••••••••••</span>
+                        <button class="ms-Button ms-Button--small" id="change-api-key-btn">
+                            <span class="ms-Button-label">Change</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <label class="ms-Label">Response Length</label>
+                    <select class="ms-Dropdown" id="response-length">
+                        <option value="short">Short (100-300 words)</option>
+                        <option value="medium" selected>Medium (300-600 words)</option>
+                        <option value="long">Long (600+ words)</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <label class="ms-Label">AI Model</label>
+                    <select class="ms-Dropdown" id="ai-model">
+                        <option value="gpt-3.5-turbo" selected>GPT-3.5 Turbo</option>
+                        <option value="gpt-4">GPT-4</option>
+                        <option value="claude-3">Claude 3</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay" style="display: none;">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Processing with TENS AI...</p>
+            </div>
+        </div>
+
+        <!-- Error Messages -->
+        <div id="error-message" class="error-message" style="display: none;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="error-text"></span>
+        </div>
+
+        <!-- Success Messages -->
+        <div id="success-message" class="success-message" style="display: none;">
+            <i class="fas fa-check-circle"></i>
+            <span id="success-text"></span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="taskpane.js"></script>
+</body>
+</html>
